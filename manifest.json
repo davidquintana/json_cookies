@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cookie Saver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Save cookies from the current website to a JSON file",
   "permissions": [
     "cookies",
