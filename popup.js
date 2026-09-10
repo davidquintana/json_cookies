@@ -13,8 +13,14 @@ document.getElementById('saveCookies').addEventListener('click', async () => {
       return;
     }
 
+    // Find the cookie store that owns this tab. Incognito windows use a
+    // separate store, and getAll() without storeId reads the regular
+    // profile's store even when the popup is opened from an incognito tab.
+    const stores = await chrome.cookies.getAllCookieStores();
+    const store = stores.find(s => s.tabIds.includes(tab.id));
+
     // Get all cookies for the current tab's URL
-    const cookies = await chrome.cookies.getAll({ url: tab.url });
+    const cookies = await chrome.cookies.getAll({ url: tab.url, storeId: store?.id });
 
     if (cookies.length === 0) {
       statusDiv.textContent = 'No cookies found';
